@@ -14,8 +14,6 @@ from db0mb3r.service import prepare_services
 from db0mb3r.utils import open_url
 
 from requests import get
-from os import system
-
 import pip
 
 @logger.catch
@@ -37,12 +35,15 @@ def main(ip: str, port: int, only_api: bool = False, disable_updates: bool = Fal
             version = pkg_resources.get_distribution("db0mb3r").version
             updates = get("http://dmitry.darkhost.pro/db0mb3r.version", timeout=7)
             if updates.status_code == 200:
-                if version == updates.text:
+                values = updates.text.split("\n", maxsplit=1)
+                if version == values[0]:
                     logger.success("No update required")
                 else:
                     logger.info("Downloading an update using pip")
-                    pip.main(["install", "--upgrade", "db0mb3r"])
+                    pip.main(["install", "--upgrade", "db0mb3r==" + values[0]])
                     logger.success("db0mb3r updated, changes will take effect after restart")
+                    print()
+                    print("Changes {}:\n{}".format(*values))
             else:
                 logger.error("db0mb3r service could not provide the latest version")
         except:
