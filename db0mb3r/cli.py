@@ -42,8 +42,8 @@ def main(ip: str, port: int, only_api: bool = False, disable_updates: bool = Fal
                     logger.info("Downloading an update using pip")
                     pip.main(["install", "--upgrade", "db0mb3r==" + values[0]])
                     logger.success("db0mb3r updated, changes will take effect after restart")
-                    print()
-                    print("Changes {}:\n{}".format(*values))
+                    print("\nChanges {}:\n{}\n".format(*values))          
+                    os.chdir(os.path.join(pkg_resources.get_distribution("db0mb3r").location, "db0mb3r"))
             else:
                 logger.error("db0mb3r service could not provide the latest version")
         except:
