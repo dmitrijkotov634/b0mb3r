@@ -1,6 +1,6 @@
 from db0mb3r.services.service import Service
 
-class telegram(Service):
+class Telegram(Service):
 
     async def run(self):
         await self.post(
