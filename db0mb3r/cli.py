@@ -37,7 +37,8 @@ def main(ip: str, port: int, only_api: bool = False, disable_updates: bool = Fal
             updates = get("https://raw.githubusercontent.com/dmitrijkotov634/b0mb3r/master/version", timeout=5)
             
             if updates.status_code == 200:
-                values = updates.text.split("\n", maxsplit=1)
+                values = updates.text[1:].split("\r\n", maxsplit=1)
+                
                 if version == values[0]:
                     logger.success("No update required")
                 else:
