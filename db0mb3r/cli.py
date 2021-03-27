@@ -5,6 +5,7 @@ import sys
 import click
 import pkg_resources
 import uvicorn
+
 from loguru import logger
 
 os.chdir(os.path.join(pkg_resources.get_distribution("db0mb3r").location, "db0mb3r"))
@@ -33,14 +34,16 @@ def main(ip: str, port: int, only_api: bool = False, disable_updates: bool = Fal
         try:
             logger.info("Checking for updates")
             version = pkg_resources.get_distribution("db0mb3r").version
-            updates = get("http://dmitry.darkhost.pro/db0mb3r.version", timeout=7)
+            updates = get("https://raw.githubusercontent.com/dmitrijkotov634/b0mb3r/master/version", timeout=5)
+            
             if updates.status_code == 200:
                 values = updates.text.split("\n", maxsplit=1)
                 if version == values[0]:
                     logger.success("No update required")
                 else:
                     logger.info("Downloading an update using pip")
-
+                    
+                    import pip
                     pip._internal.main(["install", "--upgrade", "db0mb3r==" + values[0]])
 
                     logger.success("db0mb3r updated, changes will take effect after restart")
