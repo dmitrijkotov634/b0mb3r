@@ -9,5 +9,4 @@ phonenumbers
 click
 loguru
 random_user_agent
-requests
 pip
