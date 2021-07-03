@@ -21,19 +21,31 @@ class Service(ABC):
 
     def __init__(self, phone: str, country_code: int):
         self.country_code = str(country_code)
-        self.phone = phone[len(self.country_code) :]
+        self.phone = phone[len(self.country_code):]
         self.formatted_phone = phone
 
-        self.russian_name = "".join(
+    @property
+    def russian_name(self):
+        return "".join(
             random.choice(
                 "АаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя"
             )
             for _ in range(5)
         )
-        self.username = self.password = "".join(
+
+    @property
+    def username(self):
+        return "".join(
             random.choice(string.ascii_letters) for _ in range(12)
         )
-        self.email = (
+
+    @property
+    def password(self):
+        return self.username
+
+    @property
+    def email(self):
+        return (
             f"{self.username}@{random.choice(['gmail.com', 'mail.ru', 'yandex.ru'])}"
         )
 
@@ -52,7 +64,6 @@ class Service(ABC):
             logger.info(
                 f"{self.__class__.__name__} returned an error HTTP code: {response.status_code}"
             )
-
         return response
 
     async def get_csrf_token(self, url: str, pattern):
@@ -66,7 +77,7 @@ class Service(ABC):
             for symbol in mask:
                 if symbol == mask_symbol:
                     formatted_phone += phone[0]
-                    phone = phone[(len(phone) - 1) * -1 :]
+                    phone = phone[(len(phone) - 1) * -1:]
                 else:
                     formatted_phone += symbol
         else:

@@ -5,8 +5,6 @@ import sys
 import click
 import pkg_resources
 import uvicorn
-import subprocess
-
 from loguru import logger
 
 os.chdir(os.path.join(pkg_resources.get_distribution("db0mb3r").location, "db0mb3r"))
@@ -27,7 +25,7 @@ def main(ip: str, port: int, only_api: bool = False, disable_updates: bool = Fal
         asyncio.set_event_loop(loop)
 
     app.state.only_api = only_api
-    
+
     if not disable_updates:
         check_and_upgrade()
 
