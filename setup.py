@@ -2,11 +2,11 @@ from setuptools import setup
 
 NAME = "db0mb3r"
 DESCRIPTION = "Открытый и бесплатный СМС бомбер"
-URL = "https://github.com/crinny/b0mb3r"
+URL = "https://github.com/dmitrijkotov634/b0mb3r"
 EMAIL = ""
 AUTHOR = "crinny"
 REQUIRES_PYTHON = ">=3.7.0"
-VERSION = "3.1.4.16"
+VERSION = "3.1.4.17"
 
 with open("requirements.txt", encoding="utf-8") as f:
     REQUIRED = f.readlines()
